@@ -28,46 +28,26 @@ exports.register = async(req , res , next ) =>{
 
 exports.login = async (req, res, next) => {
   try {
-    const { email , password } = req.body;
-
-    const user = await UserService.checkIfUserExist(email);
-
-    if (user) {
-
-
-     const  isMatching  = user.comparePassword(password);
-
-     if(isMatching == false){
-
-      throw new Error("Password is incorrect");
-        
-     }
-
-     else{
-
-
-      let token = {
-
-        id:user._id,
-        email:user.email
-
-      };
-
-      // token = jwt.sign(token , process.env.JWT_SECRET , {expiresIn:process.env.JWT_EXPIRES_IN});
-
-      token = await UserService.generateToken(token , 'secret' , '1h');
-
-      return res.json({status:200 , message:"User Logged In Successfully" , token:token});
-
-     }
-
-
-    } else {
-
-        throw error;
+    const { email, password } = req.body;
+    if (!email || !password) {
+      throw new Error("Parameter are not correct");
     }
+    let user = await UserService.checkIfUserExist(email);
+    if (!user) {
+      throw new Error("User does not exist");
+    }
+    const isPasswordCorrect = await user.comparePassword(password);
+    if (isPasswordCorrect === false) {
+      throw new Error(`Username or Password does not match`);
+    }
+    // Creating Token
+    let tokenData;
+    tokenData = { _id: user._id, email: user.email };
 
+    const token = await UserService.generateToken(tokenData, "secret", "1h");
+    res.status(200).json({ status: true, success: "sendData", token: token });
   } catch (error) {
-    throw error;
+    console.log(error, "err---->");
+    next(error);
   }
 };
