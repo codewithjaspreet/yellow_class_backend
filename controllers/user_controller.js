@@ -7,14 +7,11 @@ exports.register = async(req , res , next ) =>{
     try{
 
         const { name, email, password } = req.body;
-
-
         const successRes = await UserService.registerUser(
           name,
           email,
           password
         );
-
 
         res.json({status:200 , message:"User Registered Successfully"});
 
