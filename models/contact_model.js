@@ -5,7 +5,7 @@ const UserModel = require("./user_model");
 const { Schema } = mongoose;
 
 const contactSchema = new Schema({
-    
+
   userId: {
     type: Schema.Types.ObjectId,
     ref: UserModel.modelName,
@@ -19,7 +19,6 @@ const contactSchema = new Schema({
   lastName: {
     type: String,
     required: true,
-    unique: true,
     lowercase: true,
   },
 
