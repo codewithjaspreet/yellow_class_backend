@@ -37,10 +37,7 @@ exports.getUserData = async (req, res, next) => {
       
     });
 
-    res.status(200).json({
-      message: "Contact List Fetched successfully",
-      contact,
-    });
+    res.json({ status: true, success: contact });
   } catch (error) {
     next(error);
   }
