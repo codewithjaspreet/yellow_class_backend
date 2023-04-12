@@ -42,3 +42,14 @@ exports.getUserData = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.deleteContact = async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    let deletedData = await ContactService.deleteCurrentContact(id);
+    res.json({ status: true, success: deletedData });
+  } catch (error) {
+    console.log(error, "err---->");
+    next(error);
+  }
+};

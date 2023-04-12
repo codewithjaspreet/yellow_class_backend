@@ -20,16 +20,15 @@ class ContactService {
     return await createContact.save();
   }
 
-  static async getContactList({
-    userId,
-    
-  }) {
-
+  static async getContactList({ userId }) {
     const userData = ContactModel.find({ userId: userId });
 
     return userData;
-    
-    
+  }
+
+  static async deleteCurrentContact(id) {
+    const deleted = await ContactModel.findByIdAndDelete({ _id: id });
+    return deleted;
   }
 }
 

@@ -19,7 +19,6 @@ const contactSchema = new Schema({
   lastName: {
     type: String,
     required: true,
-    lowercase: true,
   },
 
   designation: {
