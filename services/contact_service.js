@@ -30,6 +30,27 @@ class ContactService {
     const deleted = await ContactModel.findByIdAndDelete({ _id: id });
     return deleted;
   }
+
+  static async editContact({
+    id,
+    firstName,
+    lastName,
+    designation,
+    phoneNumber,
+  }) {
+    const updatedContact = await ContactModel.findByIdAndUpdate(
+      id,
+      {
+        firstName ,
+        lastName,
+        designation,
+        phoneNumber,
+      },
+      { new: true }
+    );
+
+    return updatedContact;
+  }
 }
 
 

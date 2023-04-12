@@ -52,4 +52,24 @@ exports.deleteContact = async (req, res, next) => {
     console.log(error, "err---->");
     next(error);
   }
+
+  
+};
+
+exports.updateContact = async (req, res, next) => {
+  try {
+    const { id, firstName, lastName, designation, phoneNumber } = req.body;
+
+    let updatedContact = await ContactService.editContact(
+      id,
+      firstName,
+      lastName,
+      designation,
+      phoneNumber
+    );
+
+    res.json({ status: true, success: updatedContact });
+  } catch (error) {
+    next(error);
+  }
 };
